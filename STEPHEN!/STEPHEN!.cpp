@@ -15,7 +15,7 @@ const std::string Lyrics =
     "I laughed 'cause I was completely trashed\n"
     "And I watched your ugly <sample>\n"
     "Sneer across the room\n"
-    "As if I really care that she's here with you\n"
+    "As if I really care that <he/she> here with you\n"
     "All I know is\n"
     "Your my object of affection\n"
     "My drug of choice my sick obsession\n"
@@ -26,7 +26,7 @@ const std::string Lyrics =
     "I can't take rejection <st>\n"
     "Why won't you call me?\n"
     "I've got guys waiting in the line for me too play\n"
-    "My evil girly games with all their minds\n"
+    "My evil <text> games with all their minds\n"
     "Just watch me I've got it down\n"
     "To a simple art just bat my eyes\n"
     "Like this\n"
@@ -44,6 +44,9 @@ public:
     {
         std::string placeHolder = "<st>";
         std::string placeHolder2 = "<sample>";
+        std::string placeHolder3 = "<he/she>";
+        std::string placeHolder4 = "<text>";
+
         int index = 0;
 
         while (index > -1)
@@ -63,9 +66,56 @@ public:
 
             if (index > -1)
             {
-                mNewLyrics.replace(index, placeHolder2.length(), newPronoun);
+                if (newPronoun == "girlfriend" || newPronoun == "Girlfriend")
+                {
+
+                    mNewLyrics.replace(index, placeHolder3.length(), "boyfriend");
+                }
+                else
+                {
+                    mNewLyrics.replace(index, placeHolder3.length(), "girlfriend");
+                }
             }
         }
+
+        index = 0;
+        while (index > -1)
+        {
+            index = mNewLyrics.find(placeHolder3, index);
+
+            if (index > -1)
+            {
+                if (newPronoun == "girlfriend" || newPronoun == "Girlfriend")
+                {
+
+                    mNewLyrics.replace(index, placeHolder3.length(), "she");
+                }
+                else
+                {
+                    mNewLyrics.replace(index, placeHolder3.length(), "he");
+                }
+            }
+        }
+
+        index = 0;
+        while (index > -1)
+        {
+            index = mNewLyrics.find(placeHolder4, index);
+
+            if (index > -1)
+            {
+                if (newPronoun == "girlfriend" || newPronoun == "Girlfriend")
+                {
+                   mNewLyrics.replace(index, placeHolder4.length(), "boy-ly");
+                }
+                else
+                {
+                    mNewLyrics.replace(index, placeHolder4.length(), "girly");
+                }
+            }
+            
+        }
+
     }
 
 
@@ -75,7 +125,7 @@ int main()
     std::cout << "Welcome to the Stephen converter!\n\n";
     Stephen stephen;
 
-    std::cout << "Enter (Boyfriend or Girlfriend). \n";
+    std::cout << "Enter (Boyfriend OR Girlfriend) If your love one is a girl chose girlfriend. If your love on is a boy chose boyfriend!\n";
 
     if (stephen.mNewPronoun != "Boyfriend" || stephen.mNewPronoun != "boyfriend" || stephen.mNewPronoun != "Girlfriend" || stephen.mNewPronoun != "girlfriend")
     {
@@ -87,7 +137,8 @@ int main()
     }
 
     std::cout << "Enter a name! \n";
-    std::cin >> stephen.mNewName;
+    //std::cin >> stephen.mNewName;
+    std::getline(std::cin, stephen.mNewName);
     system("cls");
 
     if (std::cin.fail())
